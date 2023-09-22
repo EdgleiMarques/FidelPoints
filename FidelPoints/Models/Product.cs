@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FidelPoints.Models
 {
-    [Table("Products")]
+    
     public class Product
     {
         [Key]
@@ -16,7 +16,7 @@ namespace FidelPoints.Models
         public string Description { get; set; }
         [Required]
         public string Image { get; set; }
-        public Order Orders { get; set; }
+//        public Order Orders { get; set; }
 
 
     }

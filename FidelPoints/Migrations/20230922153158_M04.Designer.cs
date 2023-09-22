@@ -3,6 +3,7 @@ using FidelPoints.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FidelPoints.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230922153158_M04")]
+    partial class M04
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,7 +62,7 @@ namespace FidelPoints.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Point")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("SellerId")
@@ -69,6 +71,8 @@ namespace FidelPoints.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("SellerId");
 
@@ -144,6 +148,12 @@ namespace FidelPoints.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FidelPoints.Models.Product", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("FidelPoints.Models.Seller", "Sellers")
                         .WithMany()
                         .HasForeignKey("SellerId")
@@ -151,6 +161,8 @@ namespace FidelPoints.Migrations
                         .IsRequired();
 
                     b.Navigation("Clients");
+
+                    b.Navigation("Products");
 
                     b.Navigation("Sellers");
                 });

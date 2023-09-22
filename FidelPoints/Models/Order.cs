@@ -9,12 +9,14 @@ namespace FidelPoints.Models
         [Required]
         public int SellerId { get; set; }
         public Seller Sellers { get; set; }
-        [Required]
-        public int ProductId { get; set; }
-        public ICollection<Product> Products { get; set; }
+ //       [Required]
+//        public int ProductId { get; set; }
+ //       public Product Products { get; set; }
         [Required]
         public int ClientId { get; set; }
         public Client Clients { get; set; }
+        public int Point { get; set; }
+
 
 
 
