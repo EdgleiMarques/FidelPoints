@@ -16,6 +16,7 @@ namespace FidelPoints.Models
         public string Description { get; set; }
         [Required]
         public string Image { get; set; }
+        public Order Orders { get; set; }
 
 
     }
