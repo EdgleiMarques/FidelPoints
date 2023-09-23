@@ -15,7 +15,7 @@ namespace FidelPoints.Models
         [Required]
         public string FullName { get; set; }
         [Required]
-        public string email { get; set; }
+        public string Email { get; set; }
         [Required]
         public string StoreName { get; set; }
 

@@ -16,6 +16,9 @@ namespace FidelPoints.Models
         public int ClientId { get; set; }
         public Client Clients { get; set; }
         public int Point { get; set; }
+        public DateTime CreatedAt { get; set; }= DateTime.Now;
+
+
 
 
 

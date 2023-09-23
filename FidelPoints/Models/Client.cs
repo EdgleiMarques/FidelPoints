@@ -16,7 +16,8 @@ namespace FidelPoints.Models
         public string Password { get; set; }
         [Required]
         public int Point { get; set; }
- //       public IList<Order> Orders { get; set; }
+        public string Cpf { get; set; }
+        //       public IList<Order> Orders { get; set; }
 
 
     }

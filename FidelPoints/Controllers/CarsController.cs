@@ -7,35 +7,36 @@ namespace FidelPoints.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class CarsController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public OrdersController(AppDbContext context)
+        public CarsController(AppDbContext context)
         {
             _context = context;
         }
+
         [HttpGet]
         public async Task<ActionResult> Getall()
         {
-            var client = await _context.Orders.ToListAsync();
+            var client = await _context.Cars.ToListAsync();
             return Ok(client);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Order order)
+        public async Task<ActionResult> Create(Car car)
         {
-            await _context.AddAsync(order);
+            await _context.AddAsync(car);
             await _context.SaveChangesAsync();
-            return Ok(order);
+            return Ok(car);
         }
         [HttpGet("id")]
         public async Task<ActionResult> GetById(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null) return BadRequest(new { message = "Id não encontrado" });
-            return Ok(order);
+            var car = await _context.Cars.FindAsync(id);
+            if (car  == null) return BadRequest(new { message = "Id não encontrado" });
+            return Ok(car);
         }
-
+/*
         [HttpGet("ClientId")]
         public async Task<ActionResult> GetPointsById(int clientId)
         {
@@ -43,15 +44,15 @@ namespace FidelPoints.Controllers
                 .Select(c => c.Point)
                 .SumAsync();
             return Ok(totalPoints);
-        }
+        }*/
+
         [HttpPut("id")]
-        public async Task<ActionResult> Update(int id, Order order)
+        public async Task<ActionResult> Update(int id, Car car)
         {
-            if (order.Id != id) return BadRequest();
-            var testNull = await _context.Orders.AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.Id == id);
-            if (testNull == null) return NotFound();
-            _context.Orders.Update(order);
+            if (car.Id != id) return BadRequest(new {message = "Id conflitando"});
+            if (await _context.Cars.AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.Id == id) == null) return NotFound();
+            _context.Cars.Update(car);
             await _context.SaveChangesAsync();
             return NoContent();
         }
@@ -59,9 +60,9 @@ namespace FidelPoints.Controllers
         [HttpDelete("id")]
         public async Task<ActionResult> Delete(int id)
         {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null) return NotFound();
-            _context.Orders.Remove(order);
+            var car = await _context.Cars.FindAsync(id);
+            if (car == null) return NotFound();
+            _context.Cars.Remove(car);
             await _context.SaveChangesAsync();
             return NoContent();
         }
