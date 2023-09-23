@@ -36,15 +36,26 @@ namespace FidelPoints.Controllers
             if (car  == null) return BadRequest(new { message = "Id não encontrado" });
             return Ok(car);
         }
-/*
-        [HttpGet("ClientId")]
-        public async Task<ActionResult> GetPointsById(int clientId)
+
+        [HttpGet("ProductForClientId")]
+        public async Task<ActionResult> GetProductByClient(int clientId)
         {
-            var totalPoints = await _context.Orders
-                .Select(c => c.Point)
+            var rel = await _context.Cars
+                .Include(p => p.Product)
+                .Where(c => c.ClientId == clientId)
+                .ToListAsync();
+            return Ok(rel);
+        }
+
+        [HttpGet("SumPointClient")]
+        public async Task<ActionResult> SumPointClient(int clienteId)
+        {
+            var totalPoints = await _context.Cars
+                .Where(c => c.ClientId == clienteId)
+                .Select(c => c.Product.Point)
                 .SumAsync();
-            return Ok(totalPoints);
-        }*/
+                return Ok(totalPoints);
+        }
 
         [HttpPut("id")]
         public async Task<ActionResult> Update(int id, Car car)
